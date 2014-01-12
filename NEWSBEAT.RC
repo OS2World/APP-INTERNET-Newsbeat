@@ -1,0 +1,478 @@
+#include <os2.h>
+#include <newsbeat.h>
+ICON ID_WINDOW icons\news.ico
+BITMAP REGBUT  icons\reg.bmp
+BITMAP CANBUT  icons\can.bmp
+BITMAP ID_ZOOMIN icons\zoomin.bmp
+BITMAP ID_ZOOMOUT icons\zoomout.bmp
+BITMAP ID_SZOOMIN icons\szoomin.bmp
+BITMAP ID_SZOOMOUT icons\szoomout.bmp
+BITMAP ID_SEXPL  icons\sexplore.bmp
+BITMAP ID_PCF0  icons\f0.bmp
+BITMAP ID_PCF1  icons\f1.bmp
+BITMAP ID_PCF2  icons\f2.bmp
+BITMAP ID_PCF3  icons\f3.bmp
+BITMAP ID_PCF4  ICONS\F4.BMP
+BITMAP ID_PCF5  ICONS\F5.BMP
+BITMAP ID_PCF6  ICONS\F6.BMP
+BITMAP ID_PCF7  ICONS\F7.BMP
+BITMAP ID_PCF8  ICONS\F8.BMP
+BITMAP ID_PCF9  ICONS\F9.BMP
+BITMAP ID_PCFA  ICONS\F10.BMP
+BITMAP ID_PCFB  ICONS\F11.BMP
+BITMAP ID_PCFC  ICONS\F12.BMP
+BITMAP ID_PCFD  ICONS\F13.BMP
+BITMAP ID_PCFE  ICONS\F14.BMP
+BITMAP ID_PCFF  ICONS\F15.BMP
+BITMAP ID_PCFG  ICONS\F16.BMP
+BITMAP ID_PCFH  ICONS\F17.BMP
+BITMAP ID_PCFI  ICONS\F18.BMP
+BITMAP ID_PCFJ  ICONS\F19.BMP
+BITMAP ID_EXPL  icons\explore.bmp
+BITMAP ID_WRITE icons\msgedit.bmp
+BITMAP ID_NEWL  icons\newmsg.bmp
+BITMAP ID_PCFK  ICONS\F20.BMP
+BITMAP ID_UUDECODE icons\msg2uu2.bmp
+BITMAP ID_ICOPY icons\msg2clp2.bmp
+BITMAP ID_IPRINT icons\msg2prn2.bmp
+BITMAP ID_ISAVE icons\msg2sav2.bmp
+BITMAP ID_ISETT icons\settings.bmp
+BITMAP ID_HELP  icons\help2.bmp
+BITMAP ID_QUIT  icons\quit.bmp
+BITMAP ID_CUT   icons\msg_cut.bmp
+BITMAP ID_PASTE icons\paste2.bmp
+BITMAP ID_CLEAR icons\msgclear.bmp
+BITMAP ID_COPY  icons\msgclipb.bmp
+BITMAP ID_MAR   icons\markread.bmp
+BITMAP ID_MAUR  icons\markunrd.bmp
+BITMAP ID_MAAR  icons\markared.bmp
+BITMAP ID_MAAUR icons\markaunr.bmp
+BITMAP ID_ATTACH icons\attach3.bmp
+BITMAP ID_SWRITE icons\smsgedit.bmp
+BITMAP ID_SNEWL  icons\snewmsg.bmp
+BITMAP ID_SUUDECODE icons\smsg2uu2.bmp
+BITMAP ID_SICOPY icons\smsg2clp2.bmp
+BITMAP ID_SIPRINT icons\smsg2prn2.bmp
+BITMAP ID_SISAVE icons\smsg2sav2.bmp
+BITMAP ID_SISETT icons\ssettings.bmp
+BITMAP ID_SHELP  icons\shelp2.bmp
+BITMAP ID_SQUIT  icons\squit.bmp
+BITMAP ID_SPASTE icons\spaste2.bmp
+BITMAP ID_SCOPY  icons\smsgclipb.bmp
+BITMAP ID_SMAR   icons\smarkread.bmp
+BITMAP ID_SMAUR  icons\smarkunrd.bmp
+BITMAP ID_SMAAR  icons\smarkared.bmp
+BITMAP ID_SMAAUR icons\smarkaunr.bmp
+
+ICON ID_CANADA icons\canada.ico
+ICON ID_WARP   icons\warp.ico
+STRINGTABLE
+BEGIN
+        ID_TITLE        "NewsBeat v0.99b35- Final Beta - Insomnia Software"
+END
+
+MENU POP_AGROUPS
+BEGIN
+  MENUITEM "~Find Group  Ctrl-F", MNSEARCH
+  MENUITEM "S~ubscribe    Alt-U", MNSUBC
+  MENUITEM "~Refresh List ", MNREFRESH
+END
+MENU POP_ARTICLES
+BEGIN
+  MENUITEM "Search For Ctrl-S", MMSEARCH
+  MENUITEM "~Mark As Read", MMRCUR
+  MENUITEM "Mark ~All Read", MMRALL
+  MENUITEM "Mark As ~Unread",MMUCUR
+  MENUITEM "UU~Decode Article",MNUUADDQ
+  MENUITEM "~Post", MMPOST
+END
+MENU POP_SGROUPS
+BEGIN
+  MENUITEM "Open", MNOPEN
+  MENUITEM "~Unsubscribe  Ctrl-U", MNUNSUB
+  MENUITEM "Up~date All", MNUPDATE
+END
+MENU POP_UUQ
+BEGIN
+  MENUITEM "Abort All", UUABALL
+  MENUITEM "Pause", UUPAUSE
+  MENUITEM "Delete Item", UUDELI
+END
+MENU POP_KILL
+BEGIN
+  MENUITEM "Remove From List", RMKILL
+  MENUITEM "Add To List", MMKILL
+END
+MENU ID_WINDOW PRELOAD
+BEGIN
+        SUBMENU "~Message", MMSG
+        BEGIN
+
+                MENUITEM "~Post    Alt-P", MMPOST
+                MENUITEM "~Reply    Alt-R", MMREPLY
+                MENUITEM "Author To ~KillFile   Alt-K", MMKILL
+                MENUITEM "View ~Header   Ctrl-H",MMVHEAD
+                MENUITEM SEPARATOR
+                MENUITEM "~Save   Alt-S", MMSAVE
+                MENUITEM "Prin~t HardCopy   Alt-H", MMPRINT
+                MENUITEM SEPARATOR
+                MENUITEM "UU~Decode Current Message   Alt-D", MNUUCURRENT
+                MENUITEM "~Add Selected Article to Queue   Ctrl-D", MNUUADDQ
+                MENUITEM SEPARATOR
+                MENUITEM "~Search For   Ctrl-S", MMSEARCH
+                MENUITEM SEPARATOR
+                SUBMENU  "~Mark as Read", MMREAD
+                BEGIN
+                      MENUITEM "~Current Message", MMRCUR
+                      MENUITEM "~All Messages   Alt-A", MMRALL
+                END
+                SUBMENU "Mark as ~Unread", MMUREAD
+                   BEGIN
+                       MENUITEM "~Current Message", MMUCUR
+                       MENUITEM "~All Messages   Ctrl-A", MMUALL
+                   END
+                SUBMENU "Mark for ~Offline Download", MMDOWN
+                   BEGIN
+                      MENUITEM "~Current Message", MMDOWNC
+                      MENUITEM "~All Messages", MMDOWNA
+                   END
+                MENUITEM SEPARATOR
+                MENUITEM "E~xit NewsBeat Alt-X", MMEXIT
+        END
+        SUBMENU "~Newsgroups", MNGP
+        BEGIN
+                MENUITEM "~Find Group     Ctrl-F", MNSEARCH
+                MENUITEM SEPARATOR
+                MENUITEM "S~ubscribe Selected     Alt-U", MNSUBC
+                MENUITEM "~Unsubscribe Selected  Ctrl-U", MNUNSUB
+                MENUITEM "Up~date", MNUPDATE
+                MENUITEM "~Refresh List from Server", MNREFRESH
+        END
+        SUBMENU "~Options", MOPT
+        BEGIN
+                MENUITEM "Log ~In",MOLOGIN
+                MENUITEM "Log ~Out",MOLOGOUT
+                MENUITEM SEPARATOR
+                MENUITEM "~Settings", MOSET
+                MENUITEM "~Edit Users", MMUSER
+                MENUITEM SEPARATOR
+                MENUITEM "~Connect to Server     Ctrl-C", MOSERVER
+        END
+        SUBMENU "~Help", MHELP
+        BEGIN
+                MENUITEM "~Help", MHHELP
+                MENUITEM SEPARATOR
+                MENUITEM "~About", MHABOUT, MIS_TEXT
+        END
+END
+
+ACCELTABLE ID_WINDOW PRELOAD
+BEGIN
+  "x", MMEXIT, ALT
+  "u", MNUNSUB, CONTROL
+  "f", MNSEARCH ,CONTROL
+  "s", MMSEARCH, CONTROL
+  "d", MNUUADDQ, CONTROL
+  "c", MOSERVER, CONTROL
+  "d", MNUUCURRENT, ALT
+  "p", MMPOST, ALT
+  "r", MMREPLY, ALT
+  "k", MMKILL, ALT
+  "n", MNEXT, CONTROL
+  "p", MPREVIOUS, CONTROL
+  "s", MMSAVE, ALT
+  "h", MMPRINT, ALT
+  "h", MMVHEAD, CONTROL
+  "a", MMRALL, ALT
+  "a", MMUALL, CONTROL
+END
+
+DLGTEMPLATE DLG1
+BEGIN
+        DIALOG "About", DLG1, 80,37, 220, 80, FS_BORDER |WS_VISIBLE |NOT FS_DLGBORDER, FCF_NOBYTEALIGN
+        BEGIN
+                CONTROL "", 10000, 8, 25, 202, 20, WC_STATIC, SS_TEXT |WS_VISIBLE
+                ICON ID_WINDOW, ID_WINDOW, 10, 60, 20, 16, WS_GROUP
+                ICON ID_CANADA, ID_CANADA, 10, 40, 20, 16, WS_GROUP
+                ICON ID_WARP, ID_WARP, 10, 20,20,16, WS_GROUP
+                LTEXT "NewsBeat V1.0 - Dec 1996", 10001, 36, 68, 154, 8
+                LTEXT "By Vipin Bhargava & Dave Minogue", 10002, 36, 60, 154, 8
+                PUSHBUTTON "Ok", DLG1EXIT, 5,5, 40,15
+                PUSHBUTTON "Registration Info", DLG1INFO, 55,5,80,15
+                CONTROL "Graphics: Alan  Fronshtein of HIS Designs.", 101, 36, 52, 179, 8, WC_STATIC, SS_TEXT | DT_LEFT | DT_TOP | DT_MNEMONIC | WS_VISIBLE | WS_GROUP
+        END
+
+END
+DLGTEMPLATE DLG2 LOADONCALL MOVEABLE DISCARDABLE
+
+BEGIN
+        DIALOG "Registration Info", DLG1, 0,0, 220, 200,
+        FS_BORDER|WS_VISIBLE|NOT FS_DLGBORDER, FCF_NOBYTEALIGN
+        BEGIN
+                CONTROL "", 10010, 8, 25, 200, 200, WC_STATIC, SS_TEXT|WS_VISIBLE
+                ICON    ID_WINDOW, ID_WINDOW, 10, 180, 20, 16, WS_GROUP
+                ICON    ID_CANADA, ID_CANADA, 185, 180, 20, 16, WS_GROUP
+                LTEXT   "NewsBeat V1.0 - 1996", 10011, 37,190,100,8
+                LTEXT   "Registration Info",10012,37,180,100,8
+                LTEXT   "Cost: 25$ U.S. Or 30$ Canadian",10033, 37,160,150,8
+                LTEXT   "Contacting the authors:",10034, 37,150,150,8
+                LTEXT   "Email: minogue@isys.ca or", 10035, 37, 140,150,8
+                LTEXT   "         vipin@meena.cc.uregina.ca", 10036, 37,130,150,8
+                LTEXT   "Mail check/money orders to:",10037,37,110,150,8
+                LTEXT   "Dave Minogue", 10038,60,100,180,8
+                LTEXT   "4136 Theresa Avenue", 10039,60,90,180,8
+                LTEXT   "Hanmer, Ontario, P3P 1N5", 10040,60,80,180,8
+                CTEXT   "or",10041,37,70,150,8
+                LTEXT   "Vipin Bhargava",10042,60,60,100,8
+                LTEXT   "Not Available    ", 10043,60,50,100,8
+                LTEXT   "Currently Moving.            ",10044,60,40,150,8
+                PUSHBUTTON      "Ok", DLG2EXIT, 5,5, 40,15
+                PUSHBUTTON      "Register", REGISTER,50,5,50,15
+        END
+END
+DLGTEMPLATE RegWindow LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+   DIALOG "Registration Info", RegWindow, 0,0, 220, 100,FS_BORDER|WS_VISIBLE|NOT FS_DLGBORDER, FCF_NOBYTEALIGN
+   BEGIN
+      RTEXT           "Registration Name: ", 20030, 5,80,80,8
+      RTEXT           "Registration Key: ", 20031, 5,65,80,8
+      RTEXT           "Registration Code: ", 20032, 5,50,80,8
+      ENTRYFIELD      "",REGNAMEF , 85,80,120,8,ES_MARGIN
+      ENTRYFIELD      "",REGKEYF , 85,65,120,8,ES_MARGIN
+      ENTRYFIELD      "",REGCODEF , 85,50,120,8,ES_MARGIN
+      PUSHBUTTON      "#5000", PB_REGBUT, 5,5, 90,30,BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE|BS_NOBORDER
+      PUSHBUTTON      "#5003", PB_CANCELREG,95,5,90,30,BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE|BS_NOBORDER
+   END
+END
+
+DLGTEMPLATE LOGIN LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "Login", LOGIN, 50,50,125,40, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+        LTEXT "Username:", LOG_NAME, 5,30,45,8
+        LTEXT "Password:", LOG_PASS, 5,20,45,8
+        ENTRYFIELD "", LOG_NAMEF, 50,30,70,8,ES_MARGIN
+        ENTRYFIELD "", LOG_PASSF, 50,20,70,8,ES_MARGIN|ES_UNREADABLE
+        PUSHBUTTON "Ok", LOG_OK, 2,2,45,15,BS_DEFAULT
+        PUSHBUTTON "Cancel", LOG_CANCEL, 47,2,60,15
+        END
+END
+DLGTEMPLATE APPENDDLG LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "File Exists", APPENDDLG, 50,50,186,40, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+        LTEXT "File Exists, Append Or OverWrite?", AP_TXT, 5,20,175,10
+        PUSHBUTTON "Append", AP_AP, 2,2,60,15,BS_DEFAULT
+        PUSHBUTTON "Overwrite", AP_WO, 62,2,60,15
+        PUSHBUTTON "Cancel", AP_CA, 124,2,60,15
+        END
+END
+DLGTEMPLATE FGROUP
+BEGIN
+        DIALOG "Find Group", FGROUP, 65, 46, 160, 56, WS_VISIBLE, FCF_SYSMENU |FCF_TITLEBAR
+        BEGIN
+                LTEXT "Groupname:", FGTEXT, 4, 44, 51, 8, SS_TEXT | DT_LEFT | DT_VCENTER | WS_VISIBLE | WS_GROUP
+                ENTRYFIELD "", FGTEXTF, 60, 44, 96, 9, ES_LEFT | ES_AUTOSCROLL | ES_MARGIN | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Find", FG_FIND, 4, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP|BS_DEFAULT
+                PUSHBUTTON "Cancel", FG_CANCEL, 56, 2, 48, 15
+                PUSHBUTTON "Find Next", FG_NEXT, 108, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Subscribe", FG_SUBSCRIBE, 56, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Done", FG_OK, 4, 2, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Help", FG_HELP, 108, 2, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+        END
+END
+DLGTEMPLATE FMESSAGE
+BEGIN
+        DIALOG "Find Message", FMESSAGE, 65,46,160,56, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+                LTEXT "Pattern:", FMTEXT, 4,44,51,8,SS_TEXT|DT_LEFT|DT_VCENTER|WS_VISIBLE|WS_GROUP
+                ENTRYFIELD "", FMTEXTF, 60,44,96,9, ES_LEFT | ES_AUTOSCROLL | ES_MARGIN |WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Find", FM_FIND, 4, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP|BS_DEFAULT
+                PUSHBUTTON "Done", FM_CANCEL, 56, 2, 48, 15
+                PUSHBUTTON "Find Next", FM_NEXT, 108, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "UUDecode", FM_UUDECODE, 56, 18, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Read", FM_OPEN, 4, 2, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Help", FM_HELP, 108, 2, 48, 15, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+        END
+END
+DLGTEMPLATE SGROUP LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "Subscribe to Group", FGROUP, 50,50,125,40, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+                LTEXT "Subscribe to:",SGTEXT,5,30,115,8
+                ENTRYFIELD "",SGTEXTF, 5,20,115,8
+                PUSHBUTTON "Ok", SG_OK, 2,2,45,15,BS_DEFAULT
+                PUSHBUTTON "Cancel", SG_CANCEL, 47,2,60,15
+        END
+END
+DLGTEMPLATE AKILL LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "Add To KillFile", AKILL, 50,50,255,40, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+        LTEXT "Pattern to Kill:",KTEXT,5,30,115,8
+        ENTRYFIELD "",KTEXTF, 5,20,245,10
+        PUSHBUTTON "Add", KOK, 2,2,45,15,BS_DEFAULT
+        PUSHBUTTON "Cancel", KCANCEL, 47,2,60,15
+        END
+END
+MENU EDITORM PRELOAD
+BEGIN
+      SUBMENU "~File", EFFILE
+      BEGIN
+         MENUITEM "~Send", EFSEND
+         MENUITEM "~Import Txt File", EFIMPORT
+         MENUITEM "~Attach Binary File", EFATTACH
+         MENUITEM SEPARATOR
+         MENUITEM "~Abort Message", EFABORT
+      END
+      SUBMENU "~Edit", EFEDIT
+      BEGIN
+         MENUITEM "~Undo", EFUNDO
+         MENUITEM SEPARATOR
+         MENUITEM "C~lear", EFCLEAR
+         MENUITEM "~Copy", EFCOPY
+         MENUITEM "C~ut", EFCUT
+         MENUITEM "~Paste", EFPASTE
+      END
+      SUBMENU "~Help", EFHELP
+      BEGIN
+         MENUITEM "General Help", EFGENHELP
+      END
+END
+DLGTEMPLATE USEREDIT
+BEGIN
+        DIALOG "Edit Users", USEREDIT, 10, 14, 147, 145, WS_VISIBLE, FCF_SYSMENU |FCF_TITLEBAR
+        BEGIN
+                LTEXT "Username", UECAT, 10, 132, 78, 12, SS_TEXT | DT_CENTER | DT_BOTTOM | WS_VISIBLE | WS_GROUP
+                LISTBOX UE_LBNAME, 10, 16, 80, 115
+                PUSHBUTTON "Done", UE_OK, 96, 112, 40, 14
+                PUSHBUTTON "Add", UE_ADD, 96, 96, 40, 14
+                PUSHBUTTON "Delete", UE_DEL, 96, 80, 40, 14
+                PUSHBUTTON "Edit", UE_EDIT, 96, 64, 40, 14
+                PUSHBUTTON "Cancel", UE_CANCEL, 96, 48, 40, 14
+        END
+
+END
+DLGTEMPLATE ADDUSER LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "Add User", ADDUSER, 50,50,125,60, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+                LTEXT "Username:", AU_NAME, 5,50,45,8
+                LTEXT "Password:", AU_PASS, 5,40,45,8
+                LTEXT "Again:", AU_PVER,5,30,45,8
+                LTEXT "Directory:", AU_DIR, 5,20,45,8
+                ENTRYFIELD "", AU_NAMEF, 50,50,70,8,ES_MARGIN
+                ENTRYFIELD "", AU_PASSF, 50,40,70,8,ES_MARGIN|ES_UNREADABLE
+                ENTRYFIELD "", AU_PVERF, 50,30,70,8,ES_MARGIN|ES_UNREADABLE
+                ENTRYFIELD "", AU_DIRF, 50,20,70,8,ES_MARGIN
+                PUSHBUTTON "Ok", AU_OK, 2,2,45,15, BS_DEFAULT
+                PUSHBUTTON "Cancel", AU_CANCEL, 47,2,60,15
+        END
+END
+
+DLGTEMPLATE VHEAD LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+      DIALOG "Current Article Header", VHEAD, 10,15,350,180,  WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR
+      BEGIN
+         MLE "", VH_HEADER, 2, 2, 348, 175, MLS_BORDER |MLS_HSCROLL| MLS_VSCROLL | WS_VISIBLE | WS_TABSTOP | MLS_READONLY
+      END
+END
+
+
+DLGTEMPLATE EDITOR
+BEGIN
+        DIALOG "Message", EDITOR, 13, 17, 387, 239, WS_VISIBLE, FCF_SYSMENU | FCF_TITLEBAR
+        PRESPARAMS PP_FONTNAMESIZE , "8. Helv"
+        BEGIN
+                ENTRYFIELD "", EDI_FROMF, 64, 216, 316, 8, ES_MARGIN
+                ENTRYFIELD "", EDI_SUBF, 64, 204, 316, 8, ES_MARGIN
+                ENTRYFIELD "", EDI_DISF, 64, 192, 316, 8, ES_MARGIN
+                ENTRYFIELD "", EDI_TOF, 192, 172, 184, 10, ES_MARGIN
+                MLE "", EDI_MSGF, 4, 18, 380, 143, MLS_BORDER | MLS_WORDWRAP | MLS_VSCROLL | WS_VISIBLE | WS_TABSTOP
+                PRESPARAMS PP_FONTNAMESIZE "12.System VIO"
+                AUTOCHECKBOX "Mail", EDI_MAILMSG, 44, 4, 28, 8, BS_NOPOINTERFOCUS|WS_VISIBLE
+                AUTOCHECKBOX "Post", EDI_POSTMSG, 8, 4, 28, 8, BS_NOPOINTERFOCUS|WS_VISIBLE
+                PUSHBUTTON "#131", EDI_COPY, 5, 166, 18, 16, BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE
+                PUSHBUTTON "#124", EDI_CUT, 25, 166, 18, 16, BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE
+                PUSHBUTTON "#123", EDI_CLEAR, 45, 166, 18, 16, BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE
+                PUSHBUTTON "#126", EDI_PASTE, 65, 166, 18, 16, BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE
+                PUSHBUTTON "#132", EDI_ATTACH, 85, 166, 18, 16, BS_BITMAP |BS_NOPOINTERFOCUS |WS_VISIBLE
+                PUSHBUTTON "Send", EDI_OK, 76, 2, 51, 14, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Cancel", EDI_CANCEL, 128, 2, 51, 14, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                PUSHBUTTON "Help", EDI_HELP, 180, 2, 51, 14, BS_PUSHBUTTON | BS_NOPOINTERFOCUS | WS_VISIBLE | WS_TABSTOP
+                RTEXT "Email To:", EDI_TO, 192, 183, 45, 8, SS_TEXT | DT_LEFT | DT_TOP | WS_VISIBLE | WS_GROUP
+                CTEXT "(Use only if you wish to send private mail)", 107, 200, 162, 177, 8
+                RTEXT "Subject:", EDI_SUB, 28, 204, 32, 8
+                RTEXT "From:", EDI_FROM, 32, 216, 27, 8
+                RTEXT "Newsgroups:", EDI_DIS, 4, 192, 55, 8
+                AUTORADIOBUTTON "World", EDI_WORLD, 112, 178, 50, 10,BS_NOPOINTERFOCUS | WS_VISIBLE
+                AUTORADIOBUTTON "Local", EDI_LOCAL, 112, 166, 50, 10,BS_NOPOINTERFOCUS | WS_VISIBLE
+        END
+END
+DLGTEMPLATE SETTNOTE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+        DIALOG "Settings", SETTNOTE,0,0,300,200, WS_VISIBLE, FCF_SYSMENU|FCF_TITLEBAR
+        BEGIN
+               NOTEBOOK SN_ONE,0,0,300,200, BKS_BACKPAGESTR|BKS_SQUARETABS|BKS_SPIRALBIND|BKS_MAJORTABTOP|BKS_STATUSTEXTCENTER|BKS_TABTEXTCENTER|WS_GROUP|0x800|
+                        WS_TABSTOP|WS_VISIBLE
+               PRESPARAMS PP_FONTNAMESIZE "12.System VIO"
+        END
+END
+
+DLGTEMPLATE ID_NBPAGE1 LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+         DIALOG  "Page 1", ID_NBPAGE1, 0, 0, 197, 163, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+         BEGIN
+          CONTROL "", NBP1_GB, 7,100,265,63, WC_STATIC, SS_GROUPBOX |WS_VISIBLE
+          RTEXT "News Server:", SET_NEWS, 10, 145,65,8
+          ENTRYFIELD "", SET_NEWSF, 80,145,180,8, ES_MARGIN
+          RTEXT "Mail Server:", SET_MAILS, 10,135,65,8
+          ENTRYFIELD "", SET_MAILSF, 80,135,180,8, ES_MARGIN
+          RTEXT "E-Mail Address:", SET_EMAIL, 10,125,65,8
+          ENTRYFIELD "", SET_EMAILF, 80,125,180,8, ES_MARGIN
+          RTEXT "Real Name:", SET_NAME, 10,115,65,8
+          ENTRYFIELD "", SET_NAMEF, 80,115,180,8,ES_MARGIN
+          RTEXT "Organization:", SET_ORG, 10,105,65,8
+          ENTRYFIELD "", SET_ORGF, 80,105,180,8,ES_MARGIN
+         END
+END
+
+
+DLGTEMPLATE ID_NBPAGE2 LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+         DIALOG  "Page 2", ID_NBPAGE2, 0, 0, 197, 163, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+         BEGIN
+          CONTROL "", NBP2_GB, 1,2,258,60, WC_STATIC, SS_GROUPBOX |WS_VISIBLE
+          LTEXT "Signature", NBP2_SIG, 5,52,40,10
+          MLE "", NBP2_SIGF, 4, 4, 250, 50, MLS_BORDER | MLS_VSCROLL | WS_VISIBLE | WS_TABSTOP|MLS_HSCROLL
+         END
+END
+DLGTEMPLATE ID_NBPAGE3 LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+         DIALOG  "Page 3", ID_NBPAGE3, 0, 0, 197, 163, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+         BEGIN
+          CONTROL "", NBP3_GB, 8, 110,89,35, WC_STATIC, SS_GROUPBOX |WS_VISIBLE
+          LTEXT "Article Sort Method", NBP3_AD, 10,145,80,10
+          AUTORADIOBUTTON "Ascending", NBP3_ASC, 10, 135, 60, 10,BS_NOPOINTERFOCUS | WS_VISIBLE
+          AUTORADIOBUTTON "Descending", NBP3_DEC, 10, 125, 75, 10,BS_NOPOINTERFOCUS | WS_VISIBLE
+          AUTORADIOBUTTON "Threaded", NBP3_THR, 10, 115, 75, 10, BS_NOPOINTERFOCUS | WS_VISIBLE
+          CONTROL "", NBP3_GB2, 100,120,150,35,WC_STATIC, SS_GROUPBOX|WS_VISIBLE
+          LTEXT "UUDecode Settings",SET_PUU,102,145,70,10
+          LTEXT "Directory",SET_PUUD,102,135,40,8
+          ENTRYFIELD "", SET_PUUDF, 142,137,100,8,ES_MARGIN
+          AUTOCHECKBOX "Beep When File Completed", NBP3_BEEP, 102,125,110,8
+         END
+         END
+DLGTEMPLATE ID_NBPAGE4 LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+         DIALOG  "Page 4", ID_NBPAGE4, 0, 0, 197, 163, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+         BEGIN
+          CONTROL "", NBP4_GB, 7, 120,265,33, WC_STATIC, SS_GROUPBOX |WS_VISIBLE
+          RTEXT "Misc", NBP4_MISC, 10,145,20,8
+          RTEXT "Web Browser", NBP4_BR, 10, 135,65,8
+          ENTRYFIELD "", NBP4_BRF, 80,135,180,8, ES_MARGIN
+          RTEXT "Parameters", NBP4_PAR, 10,125,65,8
+          ENTRYFIELD "", NBP4_PARF, 80,125,180,8, ES_MARGIN
+
+         END
+END

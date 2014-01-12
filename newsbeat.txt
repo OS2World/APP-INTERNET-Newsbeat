@@ -1,0 +1,27 @@
+                          Upload Information Template for Hobbes.nmsu.edu
+                          ===============================================
+
+        Archive Filename: newsbeatsource.zip
+       Short Description: Source code to Newsbeat
+        Long Description: Source code to Newsbeat, Feel free to do what you wish with it
+                          include my name Dave Minogue, and Vipin Bhargava in any re-releases of it.
+                          Have no clue what shape the source is in...I remember having some that compiled under VAC, and emx.
+                          Email me at dminogue@yahoo-inc.com if you need any help.
+
+      Proposed directory
+           for placement: /pub/os2/apps/internet/news/reader
+
+               Your name:  Dave Minogue
+           Email address: dminogue@yahoo-inc.com
+    Program contact name: (same)
+   Program contact email: (same)
+             Program URL: 
+
+      Would you like the
+   contact email address
+    included in listings? yes
+
+Operating System/Version: 
+ Additional requirements: 
+
+                Replaces: (none)
